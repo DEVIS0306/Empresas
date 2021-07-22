@@ -1,0 +1,55 @@
+create database Empresa
+
+use Empresa
+
+create table empleado(
+id int IDENTITY(1,1),
+cc varchar(50),
+nombres varchar(50),
+apellidos varchar(50),
+edad varchar(50),
+fecha_Nacimiento varchar(50),
+telefono varchar(20),
+jefes varchar(50),
+ PRIMARY KEY(id),
+cargoid int  REFERENCES cargo(cargo_id)
+
+/*CONSTRAINT fk_cargoid FOREIGN KEY (Cargoid) REFERENCES cargo(cargo_Id)*/
+   
+);
+
+Create table cargo(
+cargo_id int,
+cargo_nombre varchar(50)
+ PRIMARY KEY(cargo_id),
+);
+insert into cargo(cargo_id, cargo_nombre) values(1,'Presidente');
+insert into cargo(cargo_id, cargo_nombre) values(2,'Gerente');
+insert into cargo(cargo_id, cargo_nombre) values(3,'SubGerente');
+insert into cargo(cargo_id, cargo_nombre) values(4,'Lideres');
+insert into cargo(cargo_id, cargo_nombre) values(5,'Operaios');
+select * from cargo;
+
+INSERT INTO empleado
+(cc, nombres, apellidos,edad, fecha_Nacimiento, telefono, jefes, cargoid)
+
+Values ('1004374319','Devis','Vergara', '24','20/12/1996','3014729698','yo mismo', 1);
+
+select * from empleado;
+select e.nombres, c.cargo_nombre
+from empleado e inner join cargo c on c.cargo_id= e.cargoid;
+
+
+
+
+SELECT COUNT(cargoid),
+CASE
+WHEN cargoid =1 THEN'PRESIDENTE'
+WHEN cargoid =2 THEN'GERENTE'
+WHEN cargoid =3 THEN'SUBGERENTE'
+WHEN cargoid =4 THEN'LIDERES'
+WHEN cargoid =5 THEN'OPERARIOS'
+ELSE 'NINGUNO'
+END AS cargoid
+FROM empleado
+GROUP BY cargoid
